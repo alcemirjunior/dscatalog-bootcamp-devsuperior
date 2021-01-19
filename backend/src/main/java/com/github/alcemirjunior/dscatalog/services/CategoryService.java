@@ -3,8 +3,11 @@ package com.github.alcemirjunior.dscatalog.services;
 import com.github.alcemirjunior.dscatalog.dto.CategoryDTO;
 import com.github.alcemirjunior.dscatalog.entities.Category;
 import com.github.alcemirjunior.dscatalog.repositories.CaterogyRepository;
+import com.github.alcemirjunior.dscatalog.services.exceptions.DatabaseException;
 import com.github.alcemirjunior.dscatalog.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -50,6 +53,18 @@ public class CategoryService {
             return new CategoryDTO(entity);
         } catch (EntityNotFoundException e){
             throw new ResourceNotFoundException("Id not found" + id);
+        }
+    }
+
+    public void delete(Long id) {
+        try {
+            repository.deleteById(id);
+        }
+        catch (EmptyResultDataAccessException e){
+            throw  new ResourceNotFoundException("Id not found: " + id);
+        }
+        catch (DataIntegrityViolationException e){
+            throw new DatabaseException("Integrirt violation");
         }
     }
 }
