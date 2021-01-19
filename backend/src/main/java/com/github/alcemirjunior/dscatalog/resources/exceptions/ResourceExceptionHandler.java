@@ -1,6 +1,6 @@
 package com.github.alcemirjunior.dscatalog.resources.exceptions;
 
-import com.github.alcemirjunior.dscatalog.services.exceptions.EntityNotFoundException;
+import com.github.alcemirjunior.dscatalog.services.exceptions.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -12,8 +12,8 @@ import java.time.Instant;
 @ControllerAdvice
 public class ResourceExceptionHandler {
 
-    @ExceptionHandler(EntityNotFoundException.class)//se houver alguma exceção no controlador rest sera "redirecionado" pra ca)
-    public ResponseEntity<StandardError> entityNotFound(EntityNotFoundException e, HttpServletRequest request){
+    @ExceptionHandler(ResourceNotFoundException.class)//se houver alguma exceção no controlador rest sera "redirecionado" pra ca)
+    public ResponseEntity<StandardError> entityNotFound(ResourceNotFoundException e, HttpServletRequest request){
         StandardError err = new StandardError();
         err.setTimestamp(Instant.now());
         err.setStatus(HttpStatus.NOT_FOUND.value());
