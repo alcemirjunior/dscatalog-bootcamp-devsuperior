@@ -8,9 +8,12 @@ import com.github.alcemirjunior.dscatalog.services.exceptions.ResourceNotFoundEx
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.naming.ldap.PagedResultsControl;
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
@@ -23,10 +26,10 @@ public class CategoryService {
     private CaterogyRepository repository;
 
     @Transactional(readOnly = true)
-    public List<CategoryDTO> findAll(){
-        List<Category> list = repository.findAll();
-        List<CategoryDTO> listDto = list.stream().map(x -> new CategoryDTO(x)).collect(Collectors.toList());
-        return listDto;
+    public Page<CategoryDTO> findAllPaged(PageRequest pagedRequest){
+        Page<Category> list = repository.findAll(pagedRequest);
+        return list.map(x -> new CategoryDTO(x));
+
     }
 
     @Transactional(readOnly = true)
