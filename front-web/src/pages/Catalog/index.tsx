@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import ProductCard from './components/ProductCard';
 import './styles.scss';
 import { Link } from 'react-router-dom';
-import { makeRequest } from '../../core/utils/request';
-import { ProductResponse } from '../../core/types/Product';
+import { makeRequest } from 'core/utils/request';
+import { ProductResponse } from 'core/types/Product';
+import ProductCardLouder from './components/Loaders/ProductCardLouder';
 
 const Catalog = () => {
   
@@ -11,16 +12,20 @@ const Catalog = () => {
    //quando a lista de produtos estiver disponível, popular um estado no componente e listar os produtos dinamicamente
 
    const [productResponse, setProductResponse] = useState<ProductResponse>();
-
-   console.log(productResponse);
+   const [isLoading, setIsLoading] = useState(false);
 
    useEffect(() => {
       const params = {
          page: 0,
          linesPerPage: 12
       }
+
+      setIsLoading(true);
       makeRequest({url: '/products', params})
-      .then(response => setProductResponse(response.data));
+      .then(response => setProductResponse(response.data))
+      .finally(() => {
+         setIsLoading(false);
+      })
    }, []);
   
    return (
@@ -29,11 +34,13 @@ const Catalog = () => {
             Catálogo de produtos
          </h1>
          <div className="catalog-products">
-            {productResponse?.content.map(product => (
-               <Link to={`/products/${product.id}`} key={product.id}>
-                  <ProductCard product={product}/>
-               </Link>
-            ))}
+            {isLoading ? <ProductCardLouder /> : (
+               productResponse?.content.map(product => (
+                  <Link to={`/products/${product.id}`} key={product.id}>
+                     <ProductCard product={product}/>
+                  </Link>
+               ))
+            )}
          </div>
       </div>
    )
