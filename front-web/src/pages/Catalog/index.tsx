@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { makeRequest } from 'core/utils/request';
 import { ProductResponse } from 'core/types/Product';
 import ProductCardLouder from './components/Loaders/ProductCardLouder';
+import Pagination from 'core/components/Pagination';
 
 const Catalog = () => {
   
@@ -13,10 +14,11 @@ const Catalog = () => {
 
    const [productResponse, setProductResponse] = useState<ProductResponse>();
    const [isLoading, setIsLoading] = useState(false);
+   const [activePage, setActivePage] = useState(0);
 
    useEffect(() => {
       const params = {
-         page: 0,
+         page: activePage,
          linesPerPage: 12
       }
 
@@ -26,7 +28,7 @@ const Catalog = () => {
       .finally(() => {
          setIsLoading(false);
       })
-   }, []);
+   }, [activePage]);
   
    return (
       <div className="catalog-container">
@@ -42,7 +44,14 @@ const Catalog = () => {
                ))
             )}
          </div>
-      </div>
+         {productResponse && (
+         <Pagination 
+         totalPages={productResponse.totalPages}
+         activePage={activePage}
+         onChange={page => setActivePage(page)}
+         />
+         )}
+         </div>
    )
 };
 
