@@ -3,6 +3,7 @@ package com.github.alcemirjunior.dscatalog.services;
 import com.github.alcemirjunior.dscatalog.dto.RoleDTO;
 import com.github.alcemirjunior.dscatalog.dto.UserDTO;
 import com.github.alcemirjunior.dscatalog.dto.UserInsertDTO;
+import com.github.alcemirjunior.dscatalog.dto.UserUpdateDTO;
 import com.github.alcemirjunior.dscatalog.entities.Role;
 import com.github.alcemirjunior.dscatalog.entities.User;
 import com.github.alcemirjunior.dscatalog.repositories.RoleRepository;
@@ -57,7 +58,7 @@ public class UserService {
     }
 
     @Transactional
-    public UserDTO update(Long id, UserDTO dto) {
+    public UserDTO update(Long id, UserUpdateDTO dto) {
         try {
             User entity = repository.getOne(id);
             copyDtoToEntity(dto, entity);
