@@ -1,13 +1,10 @@
 package com.github.alcemirjunior.dscatalog.services;
 
-import com.github.alcemirjunior.dscatalog.dto.CategoryDTO;
 import com.github.alcemirjunior.dscatalog.dto.RoleDTO;
 import com.github.alcemirjunior.dscatalog.dto.UserDTO;
-import com.github.alcemirjunior.dscatalog.dto.UserInsertDto;
-import com.github.alcemirjunior.dscatalog.entities.Category;
+import com.github.alcemirjunior.dscatalog.dto.UserInsertDTO;
 import com.github.alcemirjunior.dscatalog.entities.Role;
 import com.github.alcemirjunior.dscatalog.entities.User;
-import com.github.alcemirjunior.dscatalog.repositories.CategoryRepository;
 import com.github.alcemirjunior.dscatalog.repositories.RoleRepository;
 import com.github.alcemirjunior.dscatalog.repositories.UserRepository;
 import com.github.alcemirjunior.dscatalog.services.exceptions.DatabaseException;
@@ -51,7 +48,7 @@ public class UserService {
     }
 
     @Transactional
-    public UserDTO insert(UserInsertDto dto) {
+    public UserDTO insert(UserInsertDTO dto) {
         User entity = new User();
         copyDtoToEntity(dto, entity);
         entity.setPassword(passwordEncoder.encode(dto.getPassword()));

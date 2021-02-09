@@ -1,11 +1,14 @@
 package com.github.alcemirjunior.dscatalog.dto;
 
-public class UserInsertDto extends UserDTO{
+import com.github.alcemirjunior.dscatalog.services.validation.UserInsertValid;
+
+@UserInsertValid
+public class UserInsertDTO extends UserDTO{
     private static final long serialVersionUID = 1L;
 
     private String password;
 
-    UserInsertDto(){
+    UserInsertDTO(){
         super();
     }
 

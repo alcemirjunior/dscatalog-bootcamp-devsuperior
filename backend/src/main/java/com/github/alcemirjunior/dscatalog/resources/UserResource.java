@@ -1,7 +1,7 @@
 package com.github.alcemirjunior.dscatalog.resources;
 
 import com.github.alcemirjunior.dscatalog.dto.UserDTO;
-import com.github.alcemirjunior.dscatalog.dto.UserInsertDto;
+import com.github.alcemirjunior.dscatalog.dto.UserInsertDTO;
 import com.github.alcemirjunior.dscatalog.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -40,7 +40,7 @@ public class UserResource {
     }
 
     @PostMapping
-    public ResponseEntity<UserDTO> insert(@Valid @RequestBody UserInsertDto dto){
+    public ResponseEntity<UserDTO> insert(@Valid @RequestBody UserInsertDTO dto){
         UserDTO newDto = service.insert(dto);
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
