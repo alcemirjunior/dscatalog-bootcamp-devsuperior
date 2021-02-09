@@ -31,11 +31,11 @@ public class Role implements Serializable {
         this.id = id;
     }
 
-    public String getauthority() {
+    public String getAuthority() {
         return authority;
     }
 
-    public void setauthority(String authority) {
+    public void setAuthority(String authority) {
         this.authority = authority;
     }
 
